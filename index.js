@@ -68,7 +68,6 @@ app.get('/', function (req, res) {
 app.post('/', function (req, res) {
     var regNum = _.capitalize(req.body.regNumberEntered);
 
-
     if (regNum === undefined) {
         req.flash('error', 'Please enter a registration number')
         res.render('index')
