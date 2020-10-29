@@ -1,12 +1,12 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
-const Registration = require('./registration_numbers');
+const registration = require('./registration_numbersDatabase');
 const session = require('express-session');
-//const flash = require('express-flash');
+const flash = require('express-flash');
 var _ = require('lodash');
 
-const registrations = Registration();
+
 const app = express();
 
 const pg = require("pg");
@@ -19,6 +19,7 @@ const pool = new Pool({
     connectionString
 });
 
+const Registrations = registration(pool);
 
 app.use(session({
     secret: 'keyboard cat',
@@ -27,7 +28,7 @@ app.use(session({
 }));
 
 
-//app.use(flash());
+app.use(flash());
 
 //setup template handlebars as the template engine
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
@@ -65,21 +66,41 @@ app.get('/', function (req, res) {
     res.render('index')
 })
 
-app.post('/', function (req, res) {
-    var regNum = _.capitalize(req.body.regNumberEntered);
 
-    if (regNum === undefined) {
-        req.flash('error', 'Please enter a registration number')
-        res.render('index')
-        return;
+app.post('/regNum', async function (req, res) {
+
+    try {
+        var regNum = _.capitalize(req.body.reg);
+
+        if (regNum === "") {
+            req.flash('error', 'Please enter a registration number')
+            res.render('index')
+            return;
+        }
+        else {
+            var Reg = {
+                regNumbers: await Registrations.addRegNums(regNum),
+                getReg: await Registrations.getRegNums()
+            }
+        }
+
+        res.render('index', {
+            Reg
+            // regNumbers: await Registrations.addRegNums(regNum),
+            // getReg: await Registrations.getRegNums()
+        })
+    } catch (error) {
+        console.log(error);
     }
-    
 
-    res.render('index', {
+    app.get('/deleteData', async function (req, res) {
 
+        await Registrations.deleteReg()
+        res.render('index', {
+
+        })
     })
-})
-
+});
 
 const PORT = process.env.PORT || 3005
 app.listen(PORT, function () {

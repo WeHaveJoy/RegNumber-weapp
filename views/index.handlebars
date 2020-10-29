@@ -1,35 +1,45 @@
 <div class="container">
     <div class="parts">
+
         <div>
             <h1>Registration numbers</h1>
 
-            <div class="message">
+            <div class="flash">
+                {{#if messages.error}}
+                {{messages.error}}
+                {{/if}}
+                <br>
+                <br>
+                <form action="/regNum" method="POST">
+                    <div>
+                        <input type="text" name="reg" class="regNumberEntered" value=""
+                            placeholder="enter a registration number">
+                        <br> <br>
+                    </div>
+                    <div class="regButtons">
+                        <button class="addReg">Add reg number</button> <button class="showReg">show</button> <a
+                            href="/deleteData"> <button class="showReg">Reset</button></a>
+                    </div>
+                    <br> <br>
+                    <div class="filter">
+                        <strong>Filter by town</strong>
+                        <input type="radio" name="town" value="CA"> Cape Town
+                        <input type="radio" name="town" value="CY">Bellville
+                        <input type="radio" name="town" value="CJ">Paarl
 
+                    </div>
+                </form>
+                <hr>
+                <div class="regNumbers">
+                       <ul class="regList">
+                    {{#each Reg}}
+                    <li>{{this.Reg}}
+                        {{/each}}
+                        </li>
+                    </ul>
+                </div>
             </div>
-
-
-            <div>
-                <input type="text" class="regNumberEntered" placeholder="enter a registration number">
-                <br> <br>
-            </div>
-            <div class="regButtons">
-                <button class="addReg">Add reg number</button> <button class="showReg">Show reg number</button>
-            </div>
-            <br> <br>
-            <div class="filter">
-                <strong>Filter by town</strong>
-                <input type="radio" name="town" value="CA"> Cape Town
-                <input type="radio" name="town" value="CY">Bellville
-                <input type="radio" name="town" value="CJ">Paarl
-
-            </div>
-            <hr>
-            <div class="regNumbers">
-
-            </div>
-            
         </div>
-    </div>
 
+    </div>
 </div>
-</form>

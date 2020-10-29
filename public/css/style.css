@@ -8,7 +8,7 @@ body {
 .container {
 	width: 90%;
 	margin:	auto;
-	
+	text-align: center;
 }
 
 .parts {
@@ -45,7 +45,7 @@ body {
 .message {
 	height: 1em;
 	font-weight: bold;
-	color: crimson;
+	/* color: crimson; */
 }
 
 .regNumber {
@@ -74,4 +74,12 @@ button{
     border: none;
     padding: 12px 20px;
     
+  }
+
+  .flash{
+	  color: red;
+  }
+
+  .regList{
+	  color: black;
   }
