@@ -1,5 +1,5 @@
 module.exports = function Registrations(pool) {
-    
+
 
     async function checkReg(cReg) {
         var regCheck = await pool.query('select reg_num from Registrations where reg_num= $1', [cReg]);
@@ -7,33 +7,28 @@ module.exports = function Registrations(pool) {
     }
 
     async function addRegNums(regEntered) {
+
+        var town = regEntered.substring(0, 2);
+        console.log(town);
+
+
         var reg = await checkReg(regEntered);
-        if (reg < 1) {
 
-            if (regEntered.startsWith("CY")) {
-                await pool.query("insert into Registrations(reg_num, loc_indicator) values($1, 'CY')", [regEntered]);
-            }
-            else if (regEntered.startsWith("CA")) {
+        if (reg === 0) {
 
-                await pool.query("insert into Registrations(reg_num, loc_indicator) values($1, 'CA')", [regEntered]);
+            var rt = await pool.query("select id from Towns where starts_with=$1", [town]);
+            var town_id = rt.rows[0].id;
 
-            }
-
-            else if (regEntered.startsWith("CJ")) {
-
-                await pool.query("insert into Registrations(reg_num, loc_indicator) values($1, 'CJ')", [regEntered]);
-            }
+            var addReg = await pool.query("insert into Registrations(reg_num, loc_indicator) values($1, $2)", [regEntered, town_id]);
+            return addReg.rows;
 
         }
     }
 
     async function getRegNums() {
         var reg = await pool.query('select reg_num from Registrations')
-        console.log(reg);
-        
+
         return reg.rows;
-        
-        
     }
 
     async function deleteReg() {
@@ -41,11 +36,22 @@ module.exports = function Registrations(pool) {
         return clear.rows;
     }
 
+    async function filter(selectedTown) {
+        
+        // var town = selectedTown.substring(0, 2);
+       
+    //     var rt = await pool.query("select id from Towns where starts_with=$1", [selectedTown]);
+    //   //  var town_id = rt.rows[0].id;
+    //     var specific = await pool.query("select reg_num from Registrations where loc_indicator=$1", [town_id])
+    //     return specific.rows;
+    }
+
     return {
         checkReg,
         addRegNums,
         getRegNums,
-        deleteReg
+        deleteReg,
+        filter
 
     }
 }

@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const registration = require('./registration_numbersDatabase');
 const session = require('express-session');
 const flash = require('express-flash');
-var _ = require('lodash');
+// const _ = require('lodash');
 
 
 const app = express();
@@ -70,24 +70,32 @@ app.get('/', function (req, res) {
 app.post('/regNum', async function (req, res) {
 
     try {
-        var regNum = _.capitalize(req.body.reg);
-
+        var regNum = req.body.reg;
+        //console.log(regNum);
         if (regNum === "") {
             req.flash('error', 'Please enter a registration number')
             res.render('index')
             return;
         }
-        else {
-            var Reg = {
-                regNumbers: await Registrations.addRegNums(regNum),
-                getReg: await Registrations.getRegNums()
-            }
-        }
+        // else {
+        //     var Reg = {
+        //         regNumbers: await Registrations.addRegNums(regNum),
+        //         getReg: await Registrations.getRegNums()
+        //     }
+        // }
+        await Registrations.addRegNums(regNum)
+        let regList = await Registrations.getRegNums()
+       // let reg;
+        // for(let i=0; i < regList.length; i++){
+        //    reg = regList[i].reg_num;
+
+        // }   
+        // console.log(reg);
 
         res.render('index', {
-            Reg
-            // regNumbers: await Registrations.addRegNums(regNum),
-            // getReg: await Registrations.getRegNums()
+            // Reg
+            getReg: regList,
+            filter: await Registrations.filter()
         })
     } catch (error) {
         console.log(error);
@@ -101,6 +109,16 @@ app.post('/regNum', async function (req, res) {
         })
     })
 });
+
+app.get('/filter', async function (req, res) {
+    
+    await Registrations.filter()
+    console.log(await Registrations.filter());
+    
+    res.render('index', {
+      
+    })
+})
 
 const PORT = process.env.PORT || 3005
 app.listen(PORT, function () {
