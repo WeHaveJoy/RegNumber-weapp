@@ -5,6 +5,7 @@ const registration = require('./registration_numbersDatabase');
 const session = require('express-session');
 const flash = require('express-flash');
 // const _ = require('lodash');
+//const substrings = require("substrings")
 
 
 const app = express();
@@ -95,8 +96,9 @@ app.post('/regNum', async function (req, res) {
         res.render('index', {
             // Reg
             getReg: regList,
-            filter: await Registrations.filter()
+            // filter: await Registrations.filter()
         })
+        
     } catch (error) {
         console.log(error);
     }
@@ -111,11 +113,13 @@ app.post('/regNum', async function (req, res) {
 });
 
 app.get('/filter', async function (req, res) {
+    var reg = req.body.town;
+    //console.log(reg);
     
-    await Registrations.filter()
-    console.log(await Registrations.filter());
+    await Registrations.filter(reg)
+   //console.log(await Registrations.filter());
     
-    res.render('index', {
+    res.render('regnum', {
       
     })
 })
