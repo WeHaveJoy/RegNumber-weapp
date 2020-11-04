@@ -62,9 +62,6 @@ li {
 	list-style: none;
 }
 
-
-
-
 input[type='radio'] {
 	margin: 1em;
 }
@@ -79,6 +76,10 @@ button{
     
   }
 
+  button:hover{
+    background-color: rgb(14, 230, 183);
+  }
+
   h1{
 	  color: yellow;
   }
@@ -89,6 +90,28 @@ button{
 	  font: bolder;
 	  color: red;
   }
+
+  .select{
+	font-size:larger ;
+	background-color: white;
+	font: bolder;
+	color: red;
+  }
+
+  .success{
+	  color: green;
+	  background-color: white;
+	  font-size:larger ;
+	  font: bolder;
+  }
+
+
+  /* .reset{
+	color: green;
+	background-color: white;
+	font-size:larger ;
+	font: bolder;
+  } */
 
   .regList{
 	  color: black;

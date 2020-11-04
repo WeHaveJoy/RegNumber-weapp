@@ -9,43 +9,72 @@
                 {{messages.error}}
                 {{/if}}
             </div>
-                <br>
-                <br>
-                <form action="/regNum" method="POST">
-                    <div>
-                        <input type="text" name="reg" class="regNumberEntered" value=""
-                            placeholder="enter a registration number"> <button class="addReg">Add reg
-                            number</button>
-
-                        <br> <br>
-                    </div>
+            {{!-- <div class="reset">
+             {{#if messages.reset}}
+                {{messages.reset}}
+                {{/if}}
+            </div> --}}
+            <br>
+            <br>
+            <form action="/regNum" method="POST">
+                <div>
+                    <input type="text" name="reg" class="regNumberEntered" value=""
+                        placeholder="enter a registration number"> <button class="addReg">Add reg
+                        number</button>
 
                     <br> <br>
-
-                </form>
-
-                <a href="/deleteData"> <button class="resetReg">Reset</button></a>
-                <br><br>
-                <form action="/regnum" method="POST">
-                    <div class="filter">
-                        <strong>Filter by town</strong>
-                        <input type="radio" name="town" value="CA"> Show all
-                        <input type="radio" name="town" value="CA"> Cape Town
-                        <input type="radio" name="town" value="CY">Bellville
-                        <input type="radio" name="town" value="CJ">Paarl
-                    </div>
-                    <br> <br>
-                    <a href="/filter"><button class="showReg">show</button></a>
-                </form>
-                <hr>
-                <div class="regNumbers">
-                    <ul class="regList">
-                        {{#each  getReg}}
-                        <li>{{this.reg_num}} </li>
-                        {{/each}}
-                    </ul>
                 </div>
+
+                <br> <br>
+
+            </form>
+            <a href="/deleteData"> <button class="resetReg">Reset</button></a>
+
+            <br><br>
+
+            <form action="/filter" method="POST">
+                <div class="filter">
+                    <strong>Filter by town</strong>
+                    <input type="radio" name="town" value="Show all"> Show all
+                    <input type="radio" name="town" value="CA"> Cape Town
+                    <input type="radio" name="town" value="CY">Bellville
+                    <input type="radio" name="town" value="CJ">Paarl
+                </div>
+                <br><br>
+                <div class="select">
+                    {{#if messages.select}}
+                    {{messages.select}}
+                    {{/if}}
+                </div>
+                <br> <br>
+                <a href="/filter"><button class="showReg">show</button></a>
+
+            </form>
+
+            <hr>
+            <div class="success">
+                {{#if messages.info}}
+                {{messages.info}}
+                {{/if}}
+            </div>
+
+            <br> <br>
+            <div class="regNumbers">
+                <ul class="regList">
+                    {{#each  getReg}}
+                    <li>{{this.reg_num}} </li>
+                    {{/each}}
+                </ul>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    setTimeout(function(){
+          document.querySelector(".flash").innerHTML= "";
+          document.querySelector(".success").innerHTML= "";
+          document.querySelector(".select").innerHTML= ""
+    }, 2000);
+  
+</script>

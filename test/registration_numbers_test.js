@@ -31,33 +31,32 @@ describe('The basic database Greet web app', function () {
 
     it('should display registration number from Cape Town', async function () {
 
-      let Registrations = registration(pool);
-    // await Registrations.addRegNums('CA 673-123');
-    // var plateNum = Registrations.filter('Cape Town');
+        let Registrations = registration(pool);
+        await Registrations.addRegNums('CA 675-456');
+        // var plateNum = Registrations.filter('Cape Town');
 
-    assert.equal("CA, CA 675-456 ", await Registrations.filter("Cape Town", "CA 675-456"))
+        assert.equal("CA 675-456 ", await Registrations.filter("CA"))
     });
 
 
     it('should display registration number from Bellvile', async function () {
 
         let Registrations = registration(pool);
-      // await Registrations.addRegNums('CA 673-123');
-      // var plateNum = Registrations.filter('Cape Town');
-  
-      assert.equal("CY, CY 590-321 ", await Registrations.filter("Cape Town", "CY 590-321"))
-      });
+        await Registrations.addRegNums('CY 673-123');
+        // var plateNum = Registrations.filter('Cape Town');
 
+        assert.equal("CY"[0].reg_num, await Registrations.filter("CY"))
+    });
 
 
     it('should display registration number from Paarl', async function () {
 
         let Registrations = registration(pool);
-      // await Registrations.addRegNums('CA 673-123');
-      // var plateNum = Registrations.filter('Cape Town');
-  
-      assert.equal("CJ, CJ 253-543", await Registrations.filter("Cape Town", "CJ 253-543"))
-      });
+         await Registrations.addRegNums('CY 456-288');
+        // var plateNum = Registrations.filter('Cape Town');
+
+        assert.equal("CJ", await Registrations.filter("CJ"))
+    });
 
 
     after(function () {

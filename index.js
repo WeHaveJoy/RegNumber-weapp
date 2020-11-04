@@ -72,21 +72,34 @@ app.post('/regNum', async function (req, res) {
 
     try {
         var regNum = req.body.reg;
-        //console.log(regNum);
+      
         if (regNum === "") {
-            req.flash('error', 'Please enter a registration number')
+            req.flash('error', 'Please enter a registration number, eg: CY 123-765, CA 123, CJ 536855')
             res.render('index')
             return;
         }
+ 
+        else {
+            // (regNum.startsWith("CY") || regNum.startsWith("CJ") || regNum.startsWith("CA"))
+            (/C[AYJ] \d{3 6}$/.test(regNum))
+            await Registrations.addRegNums(regNum)
+            //var get = await Registrations.getRegNums()
+            req.flash('info', 'Registration number has been successfully added!')
+            // res.render('index')
+            // return;
+
+        }
+
+    
         // else {
         //     var Reg = {
         //         regNumbers: await Registrations.addRegNums(regNum),
         //         getReg: await Registrations.getRegNums()
         //     }
         // }
-        await Registrations.addRegNums(regNum)
+        //await Registrations.addRegNums(regNum)
         let regList = await Registrations.getRegNums()
-       // let reg;
+        // let reg;
         // for(let i=0; i < regList.length; i++){
         //    reg = regList[i].reg_num;
 
@@ -94,11 +107,11 @@ app.post('/regNum', async function (req, res) {
         // console.log(reg);
 
         res.render('index', {
-            // Reg
-            getReg: regList,
+             //Reg: get,
+            getReg: regList
             // filter: await Registrations.filter()
         })
-        
+
     } catch (error) {
         console.log(error);
     }
@@ -112,15 +125,20 @@ app.post('/regNum', async function (req, res) {
     })
 });
 
-app.get('/filter', async function (req, res) {
+
+app.post('/filter', async function (req, res) {
     var reg = req.body.town;
-    //console.log(reg);
-    
-    await Registrations.filter(reg)
-   //console.log(await Registrations.filter());
-    
-    res.render('regnum', {
-      
+    console.log(reg);
+  if(reg === undefined){
+            req.flash('select', 'Please select a town')
+            res.render('index')
+            return;
+        }
+    var numReg = await Registrations.filter(reg)
+    //console.log(await Registrations.filter());
+
+    res.render('index', {
+        getReg : numReg
     })
 })
 
