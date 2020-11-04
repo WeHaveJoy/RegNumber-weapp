@@ -1,0 +1,1 @@
+[![Build Status](https://travis-ci.org/WeHaveJoy/registration_numbers_webapp.svg?branch=main)](https://travis-ci.org/WeHaveJoy/registration_numbers_webapp)
