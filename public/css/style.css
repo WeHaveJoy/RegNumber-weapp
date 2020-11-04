@@ -1,5 +1,6 @@
 body {
-    background-color: darkgrey;
+	/* background-color: darkgrey; */
+	background-image: url("cars1.jpeg");
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 1em;
 }
@@ -34,7 +35,7 @@ body {
 }
 
 .filter{
-    color: darkslategray;
+   color: yellow;
 }
 
 /* .addReg {
@@ -70,7 +71,7 @@ input[type='radio'] {
 
 button{
     color: black;
-    background-color:darkslategrey;
+    background-color:yellow;
     border-radius: 14px;
     font-size: 20px;
     border: none;
@@ -78,7 +79,14 @@ button{
     
   }
 
+  h1{
+	  color: yellow;
+  }
+
   .flash{
+	  font-size:larger ;
+	  background-color: white;
+	  font: bolder;
 	  color: red;
   }
 

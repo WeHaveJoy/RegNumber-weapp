@@ -1,5 +1,5 @@
 let assert = require("assert");
-let Greet = require("../greetings-webapp");
+let Greet = require("../registration_numbers_webapp");
 const pg = require("pg");
 const Pool = pg.Pool;
 
@@ -10,7 +10,7 @@ const pool = new Pool({
 });
 
 
-describe('The basic database Greet web app', function () {
+describe('The basic database Registration numbers web app', function () {
 
     beforeEach(async function () {
         // clean the tables before each test run
