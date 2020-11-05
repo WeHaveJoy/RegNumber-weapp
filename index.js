@@ -141,11 +141,11 @@ app.post('/filter', async function (req, res) {
         return;
     }
 
-    else if (reg < 1) {
-        req.flash('town', 'There are no registrations from this town')
-        res.render('index')
-        return;
-    }
+    // else if (reg < 1) {
+    //     req.flash('town', 'There are no registrations from this town')
+    //     res.render('index')
+    //     return;
+    // }
 
     var numReg = await Registrations.filter(reg)
     //console.log(await Registrations.filter());
