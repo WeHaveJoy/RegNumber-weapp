@@ -79,18 +79,24 @@ app.post('/regNum', async function (req, res) {
             return;
         }
 
-
         else {
-            // (regNum.startsWith("CY") || regNum.startsWith("CJ") || regNum.startsWith("CA"))
             (/C[AYJ] \d{3,6}$/.test(regNum))
             await Registrations.addRegNums(regNum)
             //var get = await Registrations.getRegNums()
             req.flash('info', 'Registration number has been successfully entered!')
             // res.render('index')
             // return;
-
-
         }
+
+        // else if (!(/C[AYJ] \d{3,6}$/.test(regNum))) {
+        //     req.flash('error', 'Please enter a valid registration, eg: CY 123-765, CA 123, CJ 536855')
+        // }
+
+
+        // else if (!(/C[AYJ] \d{3,6}$/.test(regNum))) {
+        //     req.flash('error', 'Please enter a valid registration, eg: CY 123-765, CA 123, CJ 536855')
+        // }
+
 
         // else {
         //     var Reg = {
@@ -102,8 +108,7 @@ app.post('/regNum', async function (req, res) {
         let regList = await Registrations.getRegNums()
         // let reg;
         // for(let i=0; i < regList.length; i++){
-        //    reg = regList[i].reg_num;
-
+        //    reg = regList[i].reg_num
         // }   
         // console.log(reg);
 
@@ -136,7 +141,7 @@ app.post('/filter', async function (req, res) {
         return;
     }
 
-   else if (reg < 1) {
+    else if (reg < 1) {
         req.flash('town', 'There are no registrations from this town')
         res.render('index')
         return;
