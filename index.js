@@ -72,25 +72,26 @@ app.post('/regNum', async function (req, res) {
 
     try {
         var regNum = req.body.reg;
-      
+
         if (regNum === "") {
             req.flash('error', 'Please enter a registration number, eg: CY 123-765, CA 123, CJ 536855')
             res.render('index')
             return;
         }
- 
+
+
         else {
             // (regNum.startsWith("CY") || regNum.startsWith("CJ") || regNum.startsWith("CA"))
-            (/C[AYJ] \d{3 6}$/.test(regNum))
+            (/C[AYJ] \d{3,6}$/.test(regNum))
             await Registrations.addRegNums(regNum)
             //var get = await Registrations.getRegNums()
-            req.flash('info', 'Registration number has been successfully added!')
+            req.flash('info', 'Registration number has been successfully entered!')
             // res.render('index')
             // return;
 
+
         }
 
-    
         // else {
         //     var Reg = {
         //         regNumbers: await Registrations.addRegNums(regNum),
@@ -107,9 +108,8 @@ app.post('/regNum', async function (req, res) {
         // console.log(reg);
 
         res.render('index', {
-             //Reg: get,
+            //Reg: get,
             getReg: regList
-            // filter: await Registrations.filter()
         })
 
     } catch (error) {
@@ -118,6 +118,7 @@ app.post('/regNum', async function (req, res) {
 
     app.get('/deleteData', async function (req, res) {
 
+        req.flash('reset', 'You have successfully deleted data in a database')
         await Registrations.deleteReg()
         res.render('index', {
 
@@ -128,17 +129,24 @@ app.post('/regNum', async function (req, res) {
 
 app.post('/filter', async function (req, res) {
     var reg = req.body.town;
-    console.log(reg);
-  if(reg === undefined){
-            req.flash('select', 'Please select a town')
-            res.render('index')
-            return;
-        }
+    // console.log(reg);
+    if (reg === undefined) {
+        req.flash('select', 'Please select a town')
+        res.render('index')
+        return;
+    }
+
+   else if (reg < 1) {
+        req.flash('town', 'There are no registrations from this town')
+        res.render('index')
+        return;
+    }
+
     var numReg = await Registrations.filter(reg)
     //console.log(await Registrations.filter());
 
     res.render('index', {
-        getReg : numReg
+        getReg: numReg
     })
 })
 

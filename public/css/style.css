@@ -98,6 +98,13 @@ button{
 	color: red;
   }
 
+  .town{
+	font-size:larger ;
+	background-color: white;
+	font: bolder;
+	color: red;
+  }
+
   .success{
 	  color: green;
 	  background-color: white;
@@ -106,12 +113,12 @@ button{
   }
 
 
-  /* .reset{
+  .reset{
 	color: green;
 	background-color: white;
 	font-size:larger ;
 	font: bolder;
-  } */
+  }
 
   .regList{
 	  color: black;

@@ -9,9 +9,9 @@
                 {{messages.error}}
                 {{/if}}
             </div>
-            {{!-- <div class="reset">
-             {{#if messages.reset}}
-                {{messages.reset}}
+            {{!-- <div class="more">
+             {{#if messages.more}}
+                {{messages.more}}
                 {{/if}}
             </div> --}}
             <br>
@@ -28,8 +28,8 @@
                 <br> <br>
 
             </form>
-            <a href="/deleteData"> <button class="resetReg">Reset</button></a>
 
+            <a href="/deleteData"> <button class="resetReg">Reset</button></a>
             <br><br>
 
             <form action="/filter" method="POST">
@@ -48,10 +48,21 @@
                 </div>
                 <br> <br>
                 <a href="/filter"><button class="showReg">show</button></a>
-
             </form>
-
             <hr>
+
+            <div class="reset">
+                {{#if messages.reset}}
+                {{messages.reset}}
+                {{/if}}
+            </div>
+
+            <div class="town">
+                {{#if messages.town}}
+                {{messages.town}}
+                {{/if}}
+            </div>
+
             <div class="success">
                 {{#if messages.info}}
                 {{messages.info}}
@@ -71,10 +82,11 @@
 </div>
 
 <script>
-    setTimeout(function(){
-          document.querySelector(".flash").innerHTML= "";
-          document.querySelector(".success").innerHTML= "";
-          document.querySelector(".select").innerHTML= ""
+    setTimeout(function () {
+        document.querySelector(".flash").innerHTML = "";
+        document.querySelector(".success").innerHTML = "";
+        document.querySelector(".select").innerHTML = ""
+        document.querySelector(".reset").innerHTML = ""
     }, 2000);
-  
+
 </script>

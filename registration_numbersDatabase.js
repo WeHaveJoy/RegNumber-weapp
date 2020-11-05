@@ -40,7 +40,7 @@ module.exports = function Registrations(pool) {
         //var town = selectedTown.substring(0, 2);
         let specific
         if (selectedTown === "Show all") {
-            specific= await pool.query(`select reg_num from Registrations`)
+            specific = await pool.query(`select reg_num from Registrations`)
         } else {
 
             var rt = await pool.query("select id from Towns where starts_with=$1", [selectedTown]);
@@ -48,7 +48,7 @@ module.exports = function Registrations(pool) {
 
             var town_id = rt.rows[0].id;
             specific = await pool.query("select reg_num from Registrations where loc_indicator=$1", [town_id])
-            console.log(town_id);
+            //  console.log(town_id);
         }
 
 
