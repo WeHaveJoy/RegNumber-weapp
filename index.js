@@ -63,8 +63,10 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.get('/', function (req, res) {
-    res.render('index')
+app.get('/', async function (req, res) {
+   
+    res.render('index', { getReg: await Registrations.getRegNums()})
+    
 })
 
 
