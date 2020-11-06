@@ -21,7 +21,9 @@ module.exports = function Registrations(pool) {
 
             var addReg = await pool.query("insert into Registrations(reg_num, loc_indicator) values($1, $2)", [regEntered, town_id]);
             return addReg.rows;
-        }
+        } 
+          
+        
     }
 
     async function getRegNums() {

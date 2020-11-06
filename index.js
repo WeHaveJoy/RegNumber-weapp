@@ -64,9 +64,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.get('/', async function (req, res) {
-   
-    res.render('index', { getReg: await Registrations.getRegNums()})
-    
+
+    res.render('index', { getReg: await Registrations.getRegNums() })
+
 })
 
 
@@ -74,6 +74,7 @@ app.post('/regNum', async function (req, res) {
 
     try {
         var regNum = _.upperCase(req.body.reg);
+        var check = await Registrations.checkReg(regNum)
 
         if (regNum === "") {
             req.flash('error', 'Please enter a registration number, eg: CY 1232, CA 123, CJ 536855')
@@ -83,15 +84,21 @@ app.post('/regNum', async function (req, res) {
         else if (!(/C[AYJ] \d{3,6}$/.test(regNum))) {
             req.flash('error', 'Please enter a valid registration, eg: CY 1232, CA 123, CJ 5368557')
         }
+        //(/C[AYJ] \d{3,6}$/.test(regNum))
 
-        else {
-            //(/C[AYJ] \d{3,6}$/.test(regNum))
-            await Registrations.addRegNums(regNum)
-            //var get = await Registrations.getRegNums()
-            req.flash('info', 'Registration number has been successfully entered!')
-            // res.render('index')
-            // return;
+        if (check !== 0) {
+            req.flash('error', "Reg Alredy exist")
+
         }
+        else {
+            var c = await Registrations.addRegNums(regNum)
+            req.flash('info', 'Registration number has been successfully added!')
+
+        }
+        //var get = await Registrations.getRegNums()
+        // res.render('index')
+        // return;
+
 
         // else {
         //     var Reg = {
@@ -118,7 +125,7 @@ app.post('/regNum', async function (req, res) {
 
     app.get('/deleteData', async function (req, res) {
 
-        req.flash('reset', 'You have successfully deleted data in a database')
+        req.flash('info', 'You have successfully deleted data in a database')
         await Registrations.deleteReg()
         res.render('index', {
 
@@ -131,7 +138,7 @@ app.post('/filter', async function (req, res) {
     var reg = req.body.town;
     // console.log(reg);
     if (reg === undefined) {
-        req.flash('select', 'Please select a town')
+        req.flash('error', 'Please select a town')
         res.render('index')
         return;
     }
