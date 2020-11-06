@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const registration = require('./registration_numbersDatabase');
 const session = require('express-session');
 const flash = require('express-flash');
-// const _ = require('lodash');
+const _ = require('lodash');
 //const substrings = require("substrings")
 
 
@@ -71,32 +71,25 @@ app.get('/', function (req, res) {
 app.post('/regNum', async function (req, res) {
 
     try {
-        var regNum = req.body.reg;
+        var regNum = _.upperCase(req.body.reg);
 
         if (regNum === "") {
-            req.flash('error', 'Please enter a registration number, eg: CY 123-765, CA 123, CJ 536855')
+            req.flash('error', 'Please enter a registration number, eg: CY 1232, CA 123, CJ 536855')
             res.render('index')
             return;
         }
+        else if (!(/C[AYJ] \d{3,6}$/.test(regNum))) {
+            req.flash('error', 'Please enter a valid registration, eg: CY 1232, CA 123, CJ 5368557')
+        }
 
         else {
-            (/C[AYJ] \d{3,6}$/.test(regNum))
+            //(/C[AYJ] \d{3,6}$/.test(regNum))
             await Registrations.addRegNums(regNum)
             //var get = await Registrations.getRegNums()
             req.flash('info', 'Registration number has been successfully entered!')
             // res.render('index')
             // return;
         }
-
-        // else if (!(/C[AYJ] \d{3,6}$/.test(regNum))) {
-        //     req.flash('error', 'Please enter a valid registration, eg: CY 123-765, CA 123, CJ 536855')
-        // }
-
-
-        // else if (!(/C[AYJ] \d{3,6}$/.test(regNum))) {
-        //     req.flash('error', 'Please enter a valid registration, eg: CY 123-765, CA 123, CJ 536855')
-        // }
-
 
         // else {
         //     var Reg = {
