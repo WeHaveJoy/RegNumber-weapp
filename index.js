@@ -68,7 +68,7 @@ app.get('/', routes.index)
 
 app.post('/regNum', routes.regNum)
 
-app.get('/deleteData');
+app.get('/deleteData', routes.deleteData);
 
 
 app.post('/filter', routes.filter)

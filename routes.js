@@ -1,10 +1,10 @@
-module.exports = function routes(Registrations) {
+module.exports = function routes(registration) {
 
     const _ = require('lodash');
 
     async function index(req, res) {
 
-        res.render('index', { getReg: await Registrations.getRegNums() })
+        res.render('index', { getReg: await registration.getRegNums() })
 
     }
 
@@ -12,7 +12,7 @@ module.exports = function routes(Registrations) {
 
         try {
             var regNum = _.upperCase(req.body.reg);
-            var check = await Registrations.checkReg(regNum)
+            var check = await registration.checkReg(regNum)
 
             if (regNum === "") {
                 req.flash('error', 'Please enter a registration number, eg: CY 1232, CA 123, CJ 536855')
@@ -29,23 +29,23 @@ module.exports = function routes(Registrations) {
 
             }
             else {
-                var c = await Registrations.addRegNums(regNum)
+                var c = await registration.addRegNums(regNum)
                 req.flash('info', 'Registration number has been successfully added!')
 
             }
-            //var get = await Registrations.getRegNums()
+            //var get = await registration.getRegNums()
             // res.render('index')
             // return;
 
 
             // else {
             //     var Reg = {
-            //         regNumbers: await Registrations.addRegNums(regNum),
-            //         getReg: await Registrations.getRegNums()
+            //         regNumbers: await registration.addRegNums(regNum),
+            //         getReg: await registration.getRegNums()
             //     }
             // }
-            //await Registrations.addRegNums(regNum)
-            let regList = await Registrations.getRegNums()
+            //await registration.addRegNums(regNum)
+            let regList = await registration.getRegNums()
             // let reg;
             // for(let i=0; i < regList.length; i++){
             //    reg = regList[i].reg_num
@@ -66,7 +66,7 @@ module.exports = function routes(Registrations) {
     async function deleteData(req, res) {
 
         req.flash('info', 'You have successfully deleted data in a database')
-        await Registrations.deleteReg()
+        await registration.deleteReg()
         res.render('index', {
 
         })
@@ -83,13 +83,13 @@ module.exports = function routes(Registrations) {
         }
 
         // else if (reg < 1) {
-        //     req.flash('town', 'There are no registrations from this town')
+        //     req.flash('town', 'There are no registration from this town')
         //     res.render('index')
         //     return;
         // }
 
-        var numReg = await Registrations.filter(reg)
-        //console.log(await Registrations.filter());
+        var numReg = await registration.filter(reg)
+        //console.log(await registration.filter());
 
         res.render('index', {
             getReg: numReg
