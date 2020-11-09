@@ -24,7 +24,7 @@ module.exports = function routes(registration) {
             }
             //(/C[AYJ] \d{3,6}$/.test(regNum))
 
-            if (check !== 0) {
+           else if (check !== 0) {
                 req.flash('error', "Reg Alredy exist")
 
             }
