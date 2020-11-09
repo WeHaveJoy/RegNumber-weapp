@@ -15,12 +15,12 @@ module.exports = function routes(registration) {
             var check = await registration.checkReg(regNum)
 
             if (regNum === "") {
-                req.flash('error', 'Please enter a registration number, eg: CY 1232, CA 123, CJ 536855')
+                req.flash('error', 'Please enter a registration number, eg: CY 123-532, CA 123, CJ 556 764')
                 res.render('index')
                 return;
             }
-            else if (!(/C[AYJ] \d{3,6}$/.test(regNum))) {
-                req.flash('error', 'Please enter a valid registration, eg: CY 1232, CA 123, CJ 5368557')
+            else if (!"[A-Za] {2,3}\s\d{3}\w\d{3}|[A-Za-z]{2,3}\s\d{2,8}") {
+                req.flash('error', 'Please enter a valid registration, eg: CY 123-532, CA 123, CJ 556 764')
             }
             //(/C[AYJ] \d{3,6}$/.test(regNum))
 
